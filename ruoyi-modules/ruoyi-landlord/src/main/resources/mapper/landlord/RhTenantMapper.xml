@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.landlord.mapper.RhTenantMapper">
+    
+    <resultMap type="RhTenant" id="RhTenantResult">
+        <result property="id"    column="id"    />
+        <result property="tenantName"    column="tenant_name"    />
+        <result property="tenantAvatar"    column="tenant_avatar"    />
+        <result property="tenantPhone"    column="tenant_phone"    />
+        <result property="tenantPasswd"    column="tenant_passwd"    />
+        <result property="tenantCardNumber"    column="tenant_card_number"    />
+        <result property="tenantWechatNumber"    column="tenant_wechat_number"    />
+        <result property="tenantOpenid"    column="tenant_openid"    />
+        <result property="tenantStatus"    column="tenant_status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectRhTenantVo">
+        select id, tenant_name, tenant_avatar, tenant_phone, tenant_passwd, tenant_card_number, tenant_wechat_number, tenant_openid, tenant_status, create_by, create_time, update_by, update_time, remark from rh_tenant
+    </sql>
+
+    <select id="selectRhTenantList" parameterType="RhTenant" resultMap="RhTenantResult">
+        <include refid="selectRhTenantVo"/>
+        <where>  
+            <if test="tenantName != null  and tenantName != ''"> and tenant_name like concat('%', #{tenantName}, '%')</if>
+            <if test="tenantAvatar != null  and tenantAvatar != ''"> and tenant_avatar = #{tenantAvatar}</if>
+            <if test="tenantPhone != null  and tenantPhone != ''"> and tenant_phone = #{tenantPhone}</if>
+            <if test="tenantPasswd != null  and tenantPasswd != ''"> and tenant_passwd = #{tenantPasswd}</if>
+            <if test="tenantCardNumber != null  and tenantCardNumber != ''"> and tenant_card_number = #{tenantCardNumber}</if>
+            <if test="tenantWechatNumber != null  and tenantWechatNumber != ''"> and tenant_wechat_number = #{tenantWechatNumber}</if>
+            <if test="tenantOpenid != null  and tenantOpenid != ''"> and tenant_openid = #{tenantOpenid}</if>
+            <if test="tenantStatus != null  and tenantStatus != ''"> and tenant_status = #{tenantStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectRhTenantById" parameterType="Integer" resultMap="RhTenantResult">
+        <include refid="selectRhTenantVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRhTenant" parameterType="RhTenant" useGeneratedKeys="true" keyProperty="id">
+        insert into rh_tenant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tenantName != null">tenant_name,</if>
+            <if test="tenantAvatar != null">tenant_avatar,</if>
+            <if test="tenantPhone != null">tenant_phone,</if>
+            <if test="tenantPasswd != null">tenant_passwd,</if>
+            <if test="tenantCardNumber != null">tenant_card_number,</if>
+            <if test="tenantWechatNumber != null">tenant_wechat_number,</if>
+            <if test="tenantOpenid != null">tenant_openid,</if>
+            <if test="tenantStatus != null">tenant_status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tenantName != null">#{tenantName},</if>
+            <if test="tenantAvatar != null">#{tenantAvatar},</if>
+            <if test="tenantPhone != null">#{tenantPhone},</if>
+            <if test="tenantPasswd != null">#{tenantPasswd},</if>
+            <if test="tenantCardNumber != null">#{tenantCardNumber},</if>
+            <if test="tenantWechatNumber != null">#{tenantWechatNumber},</if>
+            <if test="tenantOpenid != null">#{tenantOpenid},</if>
+            <if test="tenantStatus != null">#{tenantStatus},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRhTenant" parameterType="RhTenant">
+        update rh_tenant
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tenantName != null">tenant_name = #{tenantName},</if>
+            <if test="tenantAvatar != null">tenant_avatar = #{tenantAvatar},</if>
+            <if test="tenantPhone != null">tenant_phone = #{tenantPhone},</if>
+            <if test="tenantPasswd != null">tenant_passwd = #{tenantPasswd},</if>
+            <if test="tenantCardNumber != null">tenant_card_number = #{tenantCardNumber},</if>
+            <if test="tenantWechatNumber != null">tenant_wechat_number = #{tenantWechatNumber},</if>
+            <if test="tenantOpenid != null">tenant_openid = #{tenantOpenid},</if>
+            <if test="tenantStatus != null">tenant_status = #{tenantStatus},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRhTenantById" parameterType="Integer">
+        delete from rh_tenant where id = #{id}
+    </delete>
+
+    <delete id="deleteRhTenantByIds" parameterType="String">
+        delete from rh_tenant where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
